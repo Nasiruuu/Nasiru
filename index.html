@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edu Hub — Academic Excellence Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1D3A;
+    --gold: #C9973A;
+    --gold-light: #E8B75A;
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --text: #1A2B40;
+    --muted: #6B7A8D;
+    --accent: #1B4F8A;
+    --border: rgba(201,151,58,0.2);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:999;
+    display: flex; align-items:center; justify-content:space-between;
+    padding: 18px 6vw;
+    background: rgba(11,29,58,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,151,58,0.15);
+    transition: all 0.3s ease;
+  }
+  nav.scrolled { padding: 12px 6vw; box-shadow: 0 4px 40px rgba(0,0,0,0.3); }
+
+  .logo {
+    display:flex; align-items:center; gap:12px; text-decoration:none;
+  }
+  .logo-icon {
+    width:42px; height:42px; background: linear-gradient(135deg,var(--gold),var(--gold-light));
+    border-radius: 10px; display:flex; align-items:center; justify-content:center;
+    font-family: 'Playfair Display', serif; font-weight:900; color:var(--navy); font-size:18px;
+    box-shadow: 0 4px 15px rgba(201,151,58,0.4);
+  }
+  .logo-text { color:#fff; font-family:'Playfair Display',serif; font-size:22px; font-weight:700; }
+  .logo-text span { color:var(--gold); }
+
+  .nav-links {
+    display:flex; gap:36px; list-style:none;
+  }
+  .nav-links a {
+    color:rgba(255,255,255,0.75); text-decoration:none; font-size:14px; font-weight:500;
+    letter-spacing:0.03em; transition:color 0.2s;
+  }
+  .nav-links a:hover { color:var(--gold); }
+
+  .nav-cta {
+    background: linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--navy)!important; padding:10px 24px; border-radius:50px;
+    font-weight:600!important; letter-spacing:0.02em;
+    box-shadow:0 4px 15px rgba(201,151,58,0.35); transition:all 0.2s!important;
+  }
+  .nav-cta:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(201,151,58,0.5)!important; color:var(--navy)!important; }
+
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .hamburger span { display:block; width:24px; height:2px; background:#fff; border-radius:2px; transition:all 0.3s; }
+
+  .mobile-menu {
+    display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:998;
+    background:var(--navy); flex-direction:column; align-items:center; justify-content:center; gap:36px;
+  }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { color:#fff; text-decoration:none; font-size:26px; font-family:'Playfair Display',serif; }
+  .mobile-menu a:hover { color:var(--gold); }
+  .close-menu { position:absolute; top:24px; right:6vw; font-size:30px; color:#fff; cursor:pointer; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height:100vh; background:var(--navy);
+    display:flex; align-items:center;
+    position:relative; overflow:hidden; padding:120px 6vw 80px;
+  }
+
+  .hero-bg-pattern {
+    position:absolute; inset:0; opacity:0.04;
+    background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
+    background-size:30px 30px;
+  }
+
+  .hero-orb {
+    position:absolute; border-radius:50%;
+    background: radial-gradient(circle, rgba(201,151,58,0.18), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-orb-1 { width:700px; height:700px; top:-200px; right:-150px; }
+  .hero-orb-2 { width:400px; height:400px; bottom:-100px; left:10%; }
+
+  .hero-content { position:relative; z-index:2; max-width:680px; }
+
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(201,151,58,0.15); border:1px solid rgba(201,151,58,0.3);
+    color:var(--gold); padding:8px 18px; border-radius:50px; font-size:13px; font-weight:500;
+    margin-bottom:28px; letter-spacing:0.05em; text-transform:uppercase;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before { content:'✦'; font-size:10px; }
+
+  .hero h1 {
+    font-family:'Playfair Display',serif; font-size:clamp(42px,6vw,76px);
+    color:#fff; line-height:1.1; margin-bottom:24px;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero h1 em { color:var(--gold); font-style:italic; }
+
+  .hero-desc {
+    color:rgba(255,255,255,0.65); font-size:17px; line-height:1.75;
+    margin-bottom:44px; font-weight:300;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-actions {
+    display:flex; gap:16px; flex-wrap:wrap;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .btn-primary {
+    background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--navy); padding:15px 34px; border-radius:50px;
+    font-size:15px; font-weight:600; text-decoration:none;
+    box-shadow:0 6px 25px rgba(201,151,58,0.4); letter-spacing:0.02em;
+    transition:all 0.25s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 35px rgba(201,151,58,0.55); }
+
+  .btn-ghost {
+    border:1px solid rgba(255,255,255,0.25); color:#fff; padding:15px 34px;
+    border-radius:50px; font-size:15px; font-weight:500; text-decoration:none;
+    transition:all 0.25s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-ghost:hover { border-color:var(--gold); color:var(--gold); background:rgba(201,151,58,0.07); }
+
+  .hero-stats {
+    display:flex; gap:40px; margin-top:64px; flex-wrap:wrap;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+  .stat { border-left:2px solid var(--gold); padding-left:16px; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:32px; color:#fff; font-weight:700; }
+  .stat-label { color:rgba(255,255,255,0.5); font-size:13px; text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+
+  .hero-image-side {
+    position:absolute; right:5vw; top:50%; transform:translateY(-50%);
+    width:min(420px, 38vw); display:none;
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding:100px 6vw; }
+  .section-tag {
+    display:inline-block; color:var(--gold); font-size:12px; text-transform:uppercase;
+    letter-spacing:0.12em; font-weight:600; margin-bottom:14px;
+  }
+  .section-tag::before { content:'— '; }
+  .section-title {
+    font-family:'Playfair Display',serif; font-size:clamp(32px,4vw,52px);
+    color:var(--navy); line-height:1.2; margin-bottom:18px;
+  }
+  .section-title em { color:var(--gold); font-style:italic; }
+  .section-desc { color:var(--muted); font-size:16px; line-height:1.8; max-width:560px; font-weight:300; }
+
+  /* ─── ABOUT ─── */
+  .about { background:var(--cream); }
+  .about-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .about-visual {
+    position:relative;
+  }
+  .about-card-main {
+    background:var(--navy); border-radius:20px; padding:48px;
+    position:relative; overflow:hidden;
+  }
+  .about-card-main::before {
+    content:''; position:absolute; top:-40px; right:-40px;
+    width:180px; height:180px; border-radius:50%;
+    background:rgba(201,151,58,0.12);
+  }
+  .about-card-main h3 { font-family:'Playfair Display',serif; font-size:28px; color:#fff; margin-bottom:16px; }
+  .about-card-main p { color:rgba(255,255,255,0.6); line-height:1.8; font-weight:300; }
+
+  .about-badge-float {
+    position:absolute; bottom:-20px; right:32px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    border-radius:14px; padding:16px 24px; box-shadow:0 8px 30px rgba(201,151,58,0.4);
+    display:flex; align-items:center; gap:12px;
+  }
+  .about-badge-float .num { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--navy); }
+  .about-badge-float .lbl { font-size:12px; color:rgba(11,29,58,0.7); font-weight:500; line-height:1.4; }
+
+  .about-list { list-style:none; margin-top:28px; }
+  .about-list li {
+    display:flex; gap:14px; align-items:flex-start; margin-bottom:20px;
+    padding:18px 20px; border-radius:12px; background:#fff;
+    border:1px solid rgba(201,151,58,0.1);
+    transition:border-color 0.2s, transform 0.2s;
+  }
+  .about-list li:hover { border-color:var(--gold); transform:translateX(4px); }
+  .about-list-icon { font-size:22px; flex-shrink:0; }
+  .about-list li strong { display:block; font-weight:600; margin-bottom:4px; color:var(--navy); }
+  .about-list li span { font-size:14px; color:var(--muted); line-height:1.6; }
+
+  /* ─── SERVICES ─── */
+  .services { background:#fff; }
+  .services-header { text-align:center; margin-bottom:64px; }
+  .services-header .section-desc { margin:0 auto; }
+
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:28px; }
+
+  .service-card {
+    background:var(--cream); border-radius:20px; padding:38px 32px;
+    border:1px solid transparent; position:relative; overflow:hidden;
+    transition:all 0.3s; cursor:default;
+  }
+  .service-card::before {
+    content:''; position:absolute; inset:0; border-radius:20px;
+    background:linear-gradient(135deg,transparent,rgba(201,151,58,0.06));
+    opacity:0; transition:opacity 0.3s;
+  }
+  .service-card:hover { border-color:var(--gold); transform:translateY(-6px); box-shadow:0 20px 50px rgba(11,29,58,0.1); }
+  .service-card:hover::before { opacity:1; }
+
+  .service-icon {
+    width:60px; height:60px; border-radius:14px;
+    background:linear-gradient(135deg,var(--navy),var(--accent));
+    display:flex; align-items:center; justify-content:center; font-size:26px;
+    margin-bottom:24px; box-shadow:0 6px 20px rgba(11,29,58,0.2);
+  }
+  .service-card h3 { font-family:'Playfair Display',serif; font-size:22px; color:var(--navy); margin-bottom:12px; }
+  .service-card p { color:var(--muted); font-size:14px; line-height:1.8; font-weight:300; }
+  .service-card .service-levels {
+    margin-top:20px; display:flex; gap:8px; flex-wrap:wrap;
+  }
+  .level-tag {
+    background:rgba(201,151,58,0.12); color:var(--gold); font-size:11px;
+    padding:4px 12px; border-radius:20px; font-weight:600; letter-spacing:0.04em;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how { background:var(--navy); padding:100px 6vw; }
+  .how .section-title { color:#fff; }
+  .how .section-desc { color:rgba(255,255,255,0.5); }
+  .how-header { text-align:center; margin-bottom:70px; }
+
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0; position:relative; }
+  .steps::before {
+    content:''; position:absolute; top:52px; left:10%; right:10%; height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    pointer-events:none;
+  }
+
+  .step { text-align:center; padding:0 20px; position:relative; }
+  .step-num {
+    width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--navy); font-family:'Playfair Display',serif;
+    font-size:22px; font-weight:700; display:flex; align-items:center; justify-content:center;
+    margin:0 auto 28px; box-shadow:0 6px 25px rgba(201,151,58,0.5);
+    position:relative; z-index:1;
+  }
+  .step h4 { color:#fff; font-family:'Playfair Display',serif; font-size:20px; margin-bottom:12px; }
+  .step p { color:rgba(255,255,255,0.5); font-size:14px; line-height:1.8; font-weight:300; }
+
+  /* ─── LEVELS ─── */
+  .levels { background:var(--cream); }
+  .levels-inner { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+  .levels-tabs { display:flex; flex-direction:column; gap:12px; }
+  .level-tab {
+    padding:22px 24px; border-radius:14px; border:1px solid var(--border);
+    background:#fff; cursor:pointer; transition:all 0.25s; text-align:left;
+    display:flex; align-items:center; gap:16px;
+  }
+  .level-tab.active { background:var(--navy); border-color:var(--navy); }
+  .level-tab:hover:not(.active) { border-color:var(--gold); }
+  .level-tab-icon { font-size:28px; }
+  .level-tab h4 { font-weight:600; font-size:16px; color:var(--navy); margin-bottom:4px; }
+  .level-tab p { font-size:13px; color:var(--muted); }
+  .level-tab.active h4 { color:#fff; }
+  .level-tab.active p { color:rgba(255,255,255,0.55); }
+
+  .level-content { background:#fff; border-radius:20px; padding:44px; border:1px solid var(--border); min-height:400px; }
+  .level-content h3 { font-family:'Playfair Display',serif; font-size:28px; color:var(--navy); margin-bottom:16px; }
+  .level-content p { color:var(--muted); line-height:1.8; margin-bottom:24px; font-size:15px; }
+  .level-content ul { list-style:none; }
+  .level-content ul li {
+    display:flex; align-items:center; gap:12px; padding:10px 0;
+    border-bottom:1px solid var(--border); color:var(--text); font-size:14px;
+  }
+  .level-content ul li::before { content:'✦'; color:var(--gold); font-size:10px; flex-shrink:0; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials { background:#fff; }
+  .testimonials-header { text-align:center; margin-bottom:60px; }
+  .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px; }
+
+  .tcard {
+    background:var(--cream); border-radius:20px; padding:36px;
+    border:1px solid var(--border); position:relative;
+    transition:all 0.3s;
+  }
+  .tcard:hover { transform:translateY(-4px); box-shadow:0 15px 40px rgba(11,29,58,0.08); border-color:var(--gold); }
+  .tcard-quote {
+    font-family:'Cormorant Garamond',serif; font-size:60px; color:var(--gold);
+    line-height:0.7; margin-bottom:16px; opacity:0.5;
+  }
+  .tcard p { color:var(--text); line-height:1.8; font-size:15px; font-style:italic; margin-bottom:24px; font-family:'Cormorant Garamond',serif; font-size:18px; }
+  .tcard-author { display:flex; align-items:center; gap:14px; }
+  .tcard-avatar {
+    width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(135deg,var(--navy),var(--accent));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:16px;
+  }
+  .tcard-name { font-weight:600; color:var(--navy); font-size:15px; }
+  .tcard-role { font-size:12px; color:var(--muted); }
+  .stars { color:var(--gold); font-size:13px; margin-top:4px; }
+
+  /* ─── PRICING ─── */
+  .pricing { background:var(--cream); }
+  .pricing-header { text-align:center; margin-bottom:64px; }
+  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; max-width:960px; margin:0 auto; }
+
+  .price-card {
+    background:#fff; border-radius:20px; padding:42px 36px;
+    border:1px solid var(--border); text-align:center; position:relative; transition:all 0.3s;
+  }
+  .price-card.featured { background:var(--navy); border-color:var(--navy); }
+  .price-card:hover { transform:translateY(-6px); box-shadow:0 20px 50px rgba(11,29,58,0.12); }
+  .price-card.featured:hover { box-shadow:0 20px 50px rgba(11,29,58,0.3); }
+
+  .price-badge {
+    position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+    background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--navy); font-size:12px; font-weight:700; padding:6px 20px;
+    border-radius:20px; letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .price-tier { font-size:13px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600; color:var(--gold); margin-bottom:12px; }
+  .price-card.featured .price-tier { color:rgba(255,255,255,0.6); }
+  .price-amount { font-family:'Playfair Display',serif; font-size:14px; color:var(--muted); margin-bottom:6px; }
+  .price-card.featured .price-amount { color:rgba(255,255,255,0.5); }
+  .price-note { font-size:13px; color:var(--muted); margin-bottom:32px; }
+  .price-card.featured .price-note { color:rgba(255,255,255,0.5); }
+  .price-card h3 { font-family:'Playfair Display',serif; font-size:26px; color:var(--navy); margin-bottom:8px; }
+  .price-card.featured h3 { color:#fff; }
+  .price-features { list-style:none; text-align:left; margin-bottom:36px; }
+  .price-features li { display:flex; gap:10px; align-items:center; padding:9px 0; border-bottom:1px solid rgba(0,0,0,0.05); font-size:14px; color:var(--text); }
+  .price-card.featured .price-features li { border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.75); }
+  .price-features li::before { content:'✓'; color:var(--gold); font-weight:700; flex-shrink:0; }
+
+  /* ─── CONTACT ─── */
+  .contact { background:var(--navy); }
+  .contact .section-title { color:#fff; }
+  .contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+  .contact-info { }
+  .contact-info .section-desc { color:rgba(255,255,255,0.55); max-width:none; }
+
+  .contact-items { margin-top:44px; display:flex; flex-direction:column; gap:20px; }
+  .contact-item {
+    display:flex; gap:18px; align-items:flex-start;
+    background:rgba(255,255,255,0.05); border:1px solid rgba(201,151,58,0.15);
+    border-radius:14px; padding:20px 22px; transition:all 0.2s;
+  }
+  .contact-item:hover { border-color:var(--gold); background:rgba(201,151,58,0.05); }
+  .contact-item-icon {
+    width:44px; height:44px; border-radius:10px;
+    background:rgba(201,151,58,0.15); display:flex; align-items:center; justify-content:center;
+    font-size:20px; flex-shrink:0;
+  }
+  .contact-item-text strong { display:block; color:#fff; font-weight:600; margin-bottom:4px; }
+  .contact-item-text a, .contact-item-text span { color:rgba(255,255,255,0.55); font-size:14px; text-decoration:none; }
+  .contact-item-text a:hover { color:var(--gold); }
+
+  /* ─── FORM ─── */
+  .contact-form {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(201,151,58,0.15);
+    border-radius:24px; padding:44px 40px;
+  }
+  .form-title { font-family:'Playfair Display',serif; font-size:24px; color:#fff; margin-bottom:8px; }
+  .form-subtitle { color:rgba(255,255,255,0.45); font-size:14px; margin-bottom:36px; }
+
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .form-group { margin-bottom:20px; }
+  .form-group label { display:block; color:rgba(255,255,255,0.65); font-size:13px; font-weight:500; margin-bottom:8px; letter-spacing:0.04em; }
+  .form-group input, .form-group select, .form-group textarea {
+    width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(201,151,58,0.2);
+    border-radius:10px; padding:14px 16px; color:#fff; font-size:14px; font-family:'DM Sans',sans-serif;
+    transition:all 0.2s; outline:none; resize:none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color:rgba(255,255,255,0.25); }
+  .form-group select option { background:var(--navy); color:#fff; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color:var(--gold); background:rgba(201,151,58,0.08);
+    box-shadow:0 0 0 3px rgba(201,151,58,0.1);
+  }
+
+  .submit-btn {
+    width:100%; background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--navy); border:none; padding:16px; border-radius:50px;
+    font-size:15px; font-weight:700; cursor:pointer; letter-spacing:0.04em;
+    transition:all 0.25s; font-family:'DM Sans',sans-serif;
+  }
+  .submit-btn:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,151,58,0.4); }
+
+  .form-success {
+    display:none; text-align:center; padding:40px 20px;
+  }
+  .form-success .success-icon { font-size:56px; margin-bottom:16px; }
+  .form-success h4 { font-family:'Playfair Display',serif; font-size:26px; color:#fff; margin-bottom:10px; }
+  .form-success p { color:rgba(255,255,255,0.55); line-height:1.7; }
+
+  /* ─── FAQ ─── */
+  .faq { background:#fff; }
+  .faq-header { text-align:center; margin-bottom:60px; }
+  .faq-list { max-width:760px; margin:0 auto; }
+  .faq-item {
+    border-bottom:1px solid var(--border); overflow:hidden;
+  }
+  .faq-q {
+    width:100%; text-align:left; background:none; border:none; cursor:pointer;
+    padding:24px 0; display:flex; align-items:center; justify-content:space-between;
+    font-size:16px; font-weight:600; color:var(--navy); font-family:'DM Sans',sans-serif;
+    gap:20px;
+  }
+  .faq-q:hover { color:var(--gold); }
+  .faq-icon { font-size:22px; color:var(--gold); flex-shrink:0; transition:transform 0.3s; }
+  .faq-item.open .faq-icon { transform:rotate(45deg); }
+  .faq-a { color:var(--muted); line-height:1.8; font-size:15px; font-weight:300; max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.3s; }
+  .faq-item.open .faq-a { max-height:300px; padding-bottom:24px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background:#060F1F; padding:70px 6vw 30px;
+    border-top:1px solid rgba(201,151,58,0.1);
+  }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:60px; }
+  .footer-brand .logo-text { font-size:20px; }
+  .footer-tagline { color:rgba(255,255,255,0.4); font-size:14px; margin-top:16px; line-height:1.7; font-weight:300; max-width:280px; }
+  .footer-col h5 { color:#fff; font-weight:600; margin-bottom:20px; font-size:14px; letter-spacing:0.04em; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:12px; }
+  .footer-col ul li a { color:rgba(255,255,255,0.4); text-decoration:none; font-size:14px; transition:color 0.2s; }
+  .footer-col ul li a:hover { color:var(--gold); }
+  .footer-bottom { display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.06); padding-top:28px; flex-wrap:wrap; gap:12px; }
+  .footer-bottom p { color:rgba(255,255,255,0.3); font-size:13px; }
+  .footer-bottom-links { display:flex; gap:24px; }
+  .footer-bottom-links a { color:rgba(255,255,255,0.3); font-size:13px; text-decoration:none; }
+  .footer-bottom-links a:hover { color:var(--gold); }
+
+  /* ─── FLOATING CONTACT BTN ─── */
+  .float-wa {
+    position:fixed; bottom:28px; right:28px; z-index:997;
+    width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 25px rgba(37,211,102,0.45);
+    text-decoration:none; font-size:26px;
+    transition:all 0.25s; animation:pulse 2s ease infinite;
+  }
+  .float-wa:hover { transform:scale(1.1); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow:0 6px 25px rgba(37,211,102,0.45); }
+    50% { box-shadow:0 6px 40px rgba(37,211,102,0.7); }
+  }
+
+  .reveal {
+    opacity:0; transform:translateY(40px); transition:all 0.7s ease;
+  }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width:900px) {
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .about-inner, .contact-inner, .levels-inner { grid-template-columns:1fr; gap:48px; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+    .steps::before { display:none; }
+    .form-row { grid-template-columns:1fr; }
+    .hero-stats { gap:24px; }
+    .hero h1 { font-size:clamp(36px,8vw,58px); }
+  }
+  @media (max-width:600px) {
+    section { padding:72px 5vw; }
+    .footer-grid { grid-template-columns:1fr; gap:36px; }
+    .services-grid { grid-template-columns:1fr; }
+    .pricing-grid { grid-template-columns:1fr; }
+    .testimonials-grid { grid-template-columns:1fr; }
+    nav { padding:14px 5vw; }
+    .contact-form { padding:32px 24px; }
+    .about-card-main { padding:32px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="logo">
+    <div class="logo-icon">EH</div>
+    <span class="logo-text">Edu<span>Hub</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#levels">Levels</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Get Help Now</a></li>
+  </ul>
+  <div class="hamburger" id="ham" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="close-menu" onclick="toggleMenu()">✕</span>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#levels" onclick="toggleMenu()">Levels</a>
+  <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#contact" onclick="toggleMenu()" style="color:var(--gold)">Get Help Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Academic Excellence Partner</div>
+    <h1>We Help You <em>Excel</em> in Every Academic Challenge</h1>
+    <p class="hero-desc">From Undergraduate to PhD — Edu Hub provides expert academic support for thesis, research, assignments and more. Your academic success is our mission.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request Help Now →</a>
+      <a href="#services" class="btn-ghost">Explore Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Students Helped</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Satisfaction Rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">All</div>
+        <div class="stat-label">Academic Levels</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-card-main">
+        <h3>Why Edu Hub?</h3>
+        <p>We are a dedicated academic assistance service committed to delivering high-quality, well-researched, and properly formatted academic work. Our team of subject-matter experts brings deep knowledge across all disciplines.</p>
+        <div style="margin-top:28px; display:flex; gap:28px;">
+          <div><div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-light);font-weight:700;">100%</div><div style="color:rgba(255,255,255,0.45);font-size:12px;text-transform:uppercase;letter-spacing:0.06em;">Original Work</div></div>
+          <div><div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-light);font-weight:700;">24/7</div><div style="color:rgba(255,255,255,0.45);font-size:12px;text-transform:uppercase;letter-spacing:0.06em;">Support</div></div>
+          <div><div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-light);font-weight:700;">Fast</div><div style="color:rgba(255,255,255,0.45);font-size:12px;text-transform:uppercase;letter-spacing:0.06em;">Turnaround</div></div>
+        </div>
+      </div>
+      <div class="about-badge-float">
+        <div class="num">A+</div>
+        <div class="lbl">Quality<br>Guaranteed</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <span class="section-tag">About Us</span>
+      <h2 class="section-title">Your Trusted <em>Academic Partner</em></h2>
+      <p class="section-desc">Edu Hub was founded with one goal: to bridge the gap between students and academic excellence. We provide personalized, professional assistance across all academic levels.</p>
+      <ul class="about-list" style="margin-top:32px;">
+        <li>
+          <span class="about-list-icon">🎓</span>
+          <div><strong>Expert Team</strong><span>Our writers hold advanced degrees across various disciplines, ensuring expert-level support for your subject area.</span></div>
+        </li>
+        <li>
+          <span class="about-list-icon">🔬</span>
+          <div><strong>Research-Driven</strong><span>Every work is thoroughly researched using reputable academic sources and the latest scholarly literature.</span></div>
+        </li>
+        <li>
+          <span class="about-list-icon">🛡️</span>
+          <div><strong>100% Original</strong><span>All work is written from scratch, plagiarism-free, and formatted to your institution's requirements.</span></div>
+        </li>
+        <li>
+          <span class="about-list-icon">⚡</span>
+          <div><strong>On-Time Delivery</strong><span>We respect your deadlines — urgent requests welcome with fast turnaround times.</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <span class="section-tag">What We Offer</span>
+    <h2 class="section-title">Comprehensive <em>Academic Services</em></h2>
+    <p class="section-desc">From quick assignments to full doctoral dissertations — we cover every academic need with precision and expertise.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">📝</div>
+      <h3>Thesis & Dissertation</h3>
+      <p>End-to-end support for thesis and dissertation writing — from proposal to final defense. We handle research design, literature review, methodology, analysis and writing.</p>
+      <div class="service-levels">
+        <span class="level-tag">Masters</span>
+        <span class="level-tag">PhD</span>
+        <span class="level-tag">MPhil</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔍</div>
+      <h3>Research Papers</h3>
+      <p>Comprehensive academic research papers with proper citations, structured arguments, and critical analysis aligned with your course requirements and academic standards.</p>
+      <div class="service-levels">
+        <span class="level-tag">Undergrad</span>
+        <span class="level-tag">Postgrad</span>
+        <span class="level-tag">PhD</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📚</div>
+      <h3>Assignments & Essays</h3>
+      <p>High-quality assignments and essays across all subjects — structured, well-argued, and delivered on time. We match your writing style and meet exact requirements.</p>
+      <div class="service-levels">
+        <span class="level-tag">All Levels</span>
+        <span class="level-tag">All Subjects</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <h3>Data Analysis</h3>
+      <p>Statistical analysis using SPSS, R, Python, STATA and more. We help interpret quantitative and qualitative data for research and academic projects.</p>
+      <div class="service-levels">
+        <span class="level-tag">Quantitative</span>
+        <span class="level-tag">Qualitative</span>
+        <span class="level-tag">Mixed</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🗂️</div>
+      <h3>Literature Review</h3>
+      <p>Systematic, thematic, and narrative literature reviews sourced from credible academic databases — properly cited and synthesized to support your research framework.</p>
+      <div class="service-levels">
+        <span class="level-tag">APA</span>
+        <span class="level-tag">MLA</span>
+        <span class="level-tag">Harvard</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">✏️</div>
+      <h3>Editing & Proofreading</h3>
+      <p>Professional editing for grammar, clarity, coherence, and academic tone. We polish your work to meet publication and submission standards without altering your voice.</p>
+      <div class="service-levels">
+        <span class="level-tag">All Levels</span>
+        <span class="level-tag">Fast Turnaround</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-header reveal">
+    <span class="section-tag" style="color:var(--gold)">The Process</span>
+    <h2 class="section-title">How It <em>Works</em></h2>
+    <p class="section-desc">Getting academic help has never been this simple. Follow these four easy steps to get started.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h4>Contact Us</h4>
+      <p>Send us your request via our contact form, email, or WhatsApp. Describe your task, subject, and deadline.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <h4>Get a Quote</h4>
+      <p>We review your requirements and send you a fair, transparent price quote with estimated completion time.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <h4>Expert Assigned</h4>
+      <p>A subject-matter expert in your field is assigned to work on your academic task with full dedication.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <h4>Receive & Review</h4>
+      <p>Receive your completed work, review it, and request any revisions until you are fully satisfied.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC LEVELS -->
+<section class="levels" id="levels">
+  <div style="text-align:center;margin-bottom:60px;" class="reveal">
+    <span class="section-tag">Academic Levels</span>
+    <h2 class="section-title">Support at Every <em>Level</em></h2>
+    <p class="section-desc" style="margin:0 auto;">Wherever you are in your academic journey, Edu Hub has the expertise to support you.</p>
+  </div>
+  <div class="levels-inner">
+    <div class="levels-tabs reveal">
+      <div class="level-tab active" onclick="switchLevel(this,'undergrad')">
+        <span class="level-tab-icon">🎓</span>
+        <div><h4>Undergraduate</h4><p>HND, Diploma, Bachelor's Degree</p></div>
+      </div>
+      <div class="level-tab" onclick="switchLevel(this,'masters')">
+        <span class="level-tab-icon">📖</span>
+        <div><h4>Postgraduate</h4><p>Masters, MBA, MPhil</p></div>
+      </div>
+      <div class="level-tab" onclick="switchLevel(this,'phd')">
+        <span class="level-tab-icon">🔬</span>
+        <div><h4>Doctoral</h4><p>PhD, DBA, Professional Doctorate</p></div>
+      </div>
+      <div class="level-tab" onclick="switchLevel(this,'professional')">
+        <span class="level-tab-icon">💼</span>
+        <div><h4>Professional</h4><p>Certifications, Reports, Proposals</p></div>
+      </div>
+    </div>
+    <div class="level-content reveal" id="levelContent">
+      <h3>Undergraduate Support</h3>
+      <p>Comprehensive academic support for students at the HND, Diploma, and Bachelor's degree level. We help you build strong academic foundations and achieve your best grades.</p>
+      <ul>
+        <li>Essays and coursework assignments</li>
+        <li>Research papers and reports</li>
+        <li>Final year projects and dissertations</li>
+        <li>Case studies and presentations</li>
+        <li>Lab reports and technical writing</li>
+        <li>Literature reviews and annotated bibliographies</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header reveal">
+    <span class="section-tag">Student Reviews</span>
+    <h2 class="section-title">What Our <em>Students Say</em></h2>
+    <p class="section-desc" style="margin:0 auto;">Real feedback from real students we've helped succeed.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="tcard reveal">
+      <div class="tcard-quote">"</div>
+      <p>Edu Hub helped me complete my thesis when I was completely overwhelmed. The quality was outstanding — my supervisor had only minor corrections. Truly a lifesaver!</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">AK</div>
+        <div>
+          <div class="tcard-name">Abena Konadu</div>
+          <div class="tcard-role">MBA Student, GIMPA</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard reveal">
+      <div class="tcard-quote">"</div>
+      <p>I needed data analysis support for my research and Edu Hub delivered a professional SPSS analysis with clear interpretation. My results chapter was perfect. Highly recommended!</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">KO</div>
+        <div>
+          <div class="tcard-name">Kwame Osei</div>
+          <div class="tcard-role">PhD Candidate, UG</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard reveal">
+      <div class="tcard-quote">"</div>
+      <p>Fast, professional, and affordable. I submitted three assignments with their help and scored distinction on all of them. They really understand what lecturers want to see.</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">EB</div>
+        <div>
+          <div class="tcard-name">Efua Boateng</div>
+          <div class="tcard-role">BSc Student, KNUST</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header reveal">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-title">Transparent & <em>Affordable</em></h2>
+    <p class="section-desc" style="margin:0 auto;">Pricing varies based on the complexity and level of work. Contact us for a personalized quote — we always offer fair, competitive rates.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tier">Starter</div>
+      <h3>Assignments & Essays</h3>
+      <div class="price-amount">Starting from</div>
+      <div class="price-note">Contact for exact quote</div>
+      <ul class="price-features">
+        <li>Essays & coursework</li>
+        <li>Short research papers</li>
+        <li>Summaries & reports</li>
+        <li>2–5 page documents</li>
+        <li>Standard turnaround</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:block;text-align:center;border-radius:12px;">Request Quote</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-badge">Most Popular</div>
+      <div class="price-tier">Core</div>
+      <h3 style="color:#fff;">Research & Projects</h3>
+      <div class="price-amount">Starting from</div>
+      <div class="price-note">Contact for exact quote</div>
+      <ul class="price-features">
+        <li>Full research papers</li>
+        <li>Final year projects</li>
+        <li>Literature reviews</li>
+        <li>Data analysis</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:block;text-align:center;border-radius:12px;">Request Quote</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-tier">Premium</div>
+      <h3>Thesis & Dissertation</h3>
+      <div class="price-amount">Starting from</div>
+      <div class="price-note">Contact for exact quote</div>
+      <ul class="price-features">
+        <li>Masters & PhD thesis</li>
+        <li>Full dissertation writing</li>
+        <li>Proposal to defense</li>
+        <li>Statistical analysis</li>
+        <li>Unlimited revisions</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:block;text-align:center;border-radius:12px;">Request Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-header reveal">
+    <span class="section-tag">FAQ</span>
+    <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is the work 100% original and plagiarism-free? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Absolutely. Every piece of work we produce is written from scratch specifically for your requirements. We never reuse previous work, and we can provide a plagiarism report upon request.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I get started? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Simply fill out our contact form, send us an email at nasmansur27@gmail.com, or reach us on WhatsApp at +233 504069406. Describe your task, subject, level, and deadline — we'll respond quickly with a quote.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can you handle urgent requests? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes! We accept urgent requests and can work within tight deadlines. Contact us as early as possible to ensure we can accommodate your timeframe. Rush fees may apply for very short deadlines.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What subjects and disciplines do you cover? <span class="faq-icon">+</span></button>
+      <div class="faq-a">We cover a wide range of disciplines including Business, Management, Law, Social Sciences, Education, Engineering, Health Sciences, Economics, Finance, Accounting, IT, and many more. Contact us and we'll confirm if we cover your specific subject.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Do you offer revisions? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes. We offer free revisions to ensure you are completely satisfied with the work. Simply provide clear feedback on what needs to be adjusted and we'll make the changes promptly.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is my personal information kept confidential? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Absolutely. We treat all client information with strict confidentiality. Your personal details and the nature of your request are never shared with any third parties.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I receive my completed work? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Completed work is delivered directly to your email address in the format you specified (Word document, PDF, etc.). You'll receive a notification when your work is ready.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <span class="section-tag" style="color:var(--gold)">Get In Touch</span>
+      <h2 class="section-title">Ready to Get <em>Started?</em></h2>
+      <p class="section-desc">Send us your requirements and we'll respond within hours with a personalized quote. No commitment required.</p>
+      <div class="contact-items reveal">
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-text">
+            <strong>Phone / WhatsApp</strong>
+            <a href="tel:+233504069406">+233 504 069 406</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div class="contact-item-text">
+            <strong>Email</strong>
+            <a href="mailto:nasmansur27@gmail.com">nasmansur27@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <strong>Location</strong>
+            <span>Accra, Ghana</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⏰</div>
+          <div class="contact-item-text">
+            <strong>Working Hours</strong>
+            <span>Mon–Sat: 8:00 AM – 10:00 PM (GMT)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div id="formWrap">
+        <div class="form-title">Request Academic Help</div>
+        <div class="form-subtitle">Fill in your details and we'll get back to you promptly.</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="fname" placeholder="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" id="femail" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone / WhatsApp</label>
+            <input type="tel" id="fphone" placeholder="+233 ...">
+          </div>
+          <div class="form-group">
+            <label>Academic Level *</label>
+            <select id="flevel">
+              <option value="">Select level...</option>
+              <option>Undergraduate (HND/Diploma/BSc)</option>
+              <option>Postgraduate (Masters/MBA/MPhil)</option>
+              <option>Doctoral (PhD/DBA)</option>
+              <option>Professional / Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Type of Service *</label>
+          <select id="fservice">
+            <option value="">Select service...</option>
+            <option>Thesis / Dissertation</option>
+            <option>Research Paper</option>
+            <option>Assignment / Essay</option>
+            <option>Data Analysis</option>
+            <option>Literature Review</option>
+            <option>Editing & Proofreading</option>
+            <option>Final Year Project</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Subject / Field</label>
+            <input type="text" id="fsubject" placeholder="e.g. Business, Law, Education...">
+          </div>
+          <div class="form-group">
+            <label>Deadline</label>
+            <input type="date" id="fdeadline">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Describe Your Request *</label>
+          <textarea id="fmessage" rows="4" placeholder="Please describe your task, topic, number of pages, special requirements, or anything else that will help us assist you..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">Send Request →</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">🎉</div>
+        <h4>Request Received!</h4>
+        <p>Thank you for reaching out to Edu Hub. We've received your request and will get back to you within a few hours with a quote and next steps.<br><br>For urgent requests, please also contact us via WhatsApp at <strong style="color:var(--gold)">+233 504 069 406</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="text-decoration:none;">
+        <div class="logo-icon">EH</div>
+        <span class="logo-text">Edu<span>Hub</span></span>
+      </a>
+      <p class="footer-tagline">Your trusted academic partner — from undergraduate to PhD. Excellence is our standard, your success is our mission.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Thesis & Dissertation</a></li>
+        <li><a href="#services">Research Papers</a></li>
+        <li><a href="#services">Assignments & Essays</a></li>
+        <li><a href="#services">Data Analysis</a></li>
+        <li><a href="#services">Literature Review</a></li>
+        <li><a href="#services">Editing & Proofreading</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Academic Levels</h5>
+      <ul>
+        <li><a href="#levels">Undergraduate</a></li>
+        <li><a href="#levels">Postgraduate</a></li>
+        <li><a href="#levels">PhD / Doctoral</a></li>
+        <li><a href="#levels">Professional</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:+233504069406">+233 504 069 406</a></li>
+        <li><a href="mailto:nasmansur27@gmail.com">nasmansur27@gmail.com</a></li>
+        <li><a href="https://wa.me/233504069406" target="_blank">WhatsApp Us</a></li>
+        <li><a href="#contact">Send a Request</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Edu Hub. All rights reserved. | Accra, Ghana</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/233504069406?text=Hello%20Edu%20Hub%2C%20I%20need%20academic%20help%20with..." target="_blank" class="float-wa" title="Chat on WhatsApp">💬</a>
+
+<script>
+// NAV SCROLL
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// MOBILE MENU
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// REVEAL ON SCROLL
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+reveals.forEach(r => obs.observe(r));
+
+// FAQ
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+// LEVEL TABS
+const levelData = {
+  undergrad: {
+    title: 'Undergraduate Support',
+    desc: 'Comprehensive academic support for students at the HND, Diploma, and Bachelor\'s degree level. We help you build strong academic foundations and achieve your best grades.',
+    items: ['Essays and coursework assignments','Research papers and reports','Final year projects and dissertations','Case studies and presentations','Lab reports and technical writing','Literature reviews and annotated bibliographies']
+  },
+  masters: {
+    title: 'Postgraduate Support',
+    desc: 'Advanced academic assistance for Masters, MBA, and MPhil students. We understand the rigorous demands of postgraduate study and deliver accordingly.',
+    items: ['Masters thesis and dissertations','MBA projects and case studies','Academic journal article preparation','Systematic literature reviews','Research methodology design','Quantitative and qualitative analysis']
+  },
+  phd: {
+    title: 'Doctoral Support',
+    desc: 'Expert-level support for PhD and professional doctorate candidates. We work alongside you through every phase of your doctoral research journey.',
+    items: ['PhD thesis chapters and full drafts','Research proposal development','Comprehensive literature synthesis','Advanced statistical and data analysis','Publication-ready paper preparation','Dissertation editing and proofreading']
+  },
+  professional: {
+    title: 'Professional Support',
+    desc: 'Academic and professional writing support for certifications, continuing education, and work-based projects that require academic rigor.',
+    items: ['Professional certification reports','Business research and proposals','Policy documents and white papers','Technical documentation','Conference paper preparation','Professional portfolio writing']
+  }
+};
+
+function switchLevel(tab, key) {
+  document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  const d = levelData[key];
+  document.getElementById('levelContent').innerHTML = `
+    <h3>${d.title}</h3>
+    <p>${d.desc}</p>
+    <ul>${d.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+  `;
+}
+
+// FORM SUBMIT
+function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const level = document.getElementById('flevel').value;
+  const service = document.getElementById('fservice').value;
+  const message = document.getElementById('fmessage').value.trim();
+
+  if(!name || !email || !level || !service || !message) {
+    alert('Please fill in all required fields (marked with *).');
+    return;
+  }
+
+  // Build mailto link
+  const subject = encodeURIComponent(`Edu Hub Request: ${service} - ${level}`);
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nPhone: ${document.getElementById('fphone').value}\nAcademic Level: ${level}\nService: ${service}\nSubject: ${document.getElementById('fsubject').value}\nDeadline: ${document.getElementById('fdeadline').value}\n\nRequest Details:\n${message}`
+  );
+  window.location.href = `mailto:nasmansur27@gmail.com?subject=${subject}&body=${body}`;
+
+  // Show success
+  document.getElementById('formWrap').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>
