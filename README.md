@@ -1,0 +1,1 @@
+We are a dedicated academic assistance service committed to delivering high-quality, well-researched, and properly formatted academic work. Our team of subject-matter experts brings deep knowledge across all disciplines.
